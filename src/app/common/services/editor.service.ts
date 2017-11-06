@@ -45,7 +45,11 @@ export class EditorService {
     this.setSelection('document.selectedFrame', property);
   }
 
-  executeFunction(event) {
-    this.editor.ExecuteFunction(`document.allFrames[${event.frame.id}]`, event.func, event.args);
+  executeFunction({frame, func, args = null}) {
+    if (args) {
+      this.editor.ExecuteFunction(`document.allFrames[${frame.id}]`, func, args);
+    } else {
+      this.editor.ExecuteFunction(`document.allFrames[${frame.id}]`, func);
+    }
   }
 }
