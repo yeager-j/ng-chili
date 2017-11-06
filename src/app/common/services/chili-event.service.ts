@@ -9,7 +9,7 @@ export class ChiliEventService {
   private updateChiliFrameSource = new Subject<any>();
   private updateFontListSource = new Subject<any>();
 
-  public updateText$ = this.updateEditorTextSource.asObservable();
+  public updateEditorText$ = this.updateEditorTextSource.asObservable();
   public updateChiliText$ = this.updateChiliTextSource.asObservable();
   public updateEditorFrame$ = this.updateEditorFrameSource.asObservable();
   public updateChiliFrame$ = this.updateChiliFrameSource.asObservable();

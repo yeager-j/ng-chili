@@ -35,5 +35,41 @@
 
       <hr>
     </form>
+
+    <div *ngIf="frame?.type === 'text'">
+      <h4>Text</h4>
+
+      <div class="btn-group" data-toggle="buttons">
+        <label class="btn-primary" ngbButtonLabel>
+          <input type="checkbox" ngbButton [(ngModel)]="textFormat.lineThrough" (ngModelChange)="setFontStyle({property: 'lineThrough'})"> <del>S</del>
+        </label>
+        <label class="btn-primary" ngbButtonLabel>
+          <input type="checkbox" ngbButton [(ngModel)]="textFormat.underLine" (ngModelChange)="setFontStyle({property: 'underLine'})" [checked]="textFormat.underLine"> <i class="oi oi-underline"></i>
+        </label>
+      </div>
+
+      <div class="btn-group" ngbRadioGroup name="radioBasic" [(ngModel)]="textFormat.textAlign" (ngModelChange)="setFontStyle({property: 'textAlign', value: $event})">
+        <label ngbButtonLabel class="btn-warning">
+          <input ngbButton type="radio" [value]="'left'"><i class="oi oi-align-left"></i>
+        </label>
+        <label ngbButtonLabel class="btn-warning">
+          <input ngbButton type="radio" [value]="'center'"><i class="oi oi-align-center"></i>
+        </label>
+        <label ngbButtonLabel class="btn-warning">
+          <input ngbButton type="radio" [value]="'right'"><i class="oi oi-align-right"></i>
+        </label>
+      </div>
+
+      <div class="button-row">
+        <label for="fontSize">Font Size</label>
+        <input type="number" id="fontSize" [(ngModel)]="textFormat.fontSize" (ngModelChange)="setFontStyle({property: 'fontSize', value: $event})" class="form-control" name="fontSize">
+      </div>
+
+      <label for="fonts">Font</label>
+      <select class="form-control" id="fonts" [(ngModel)]="textFormat.font" (ngModelChange)="setFontStyle({property: 'font', value: $event})">
+        <option *ngFor="let font of fontList" [ngValue]="'cp_object:document.fonts[' + font.id + ']'">{{ font.name }}</option>
+      </select>
+      <hr>
+    </div>
   </div>
 </div>

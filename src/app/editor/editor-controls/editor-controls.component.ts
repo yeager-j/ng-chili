@@ -8,19 +8,49 @@ import { EditorService } from '../../common/services/editor.service';
   styleUrls: ['./editor-controls.component.scss']
 })
 export class EditorControlsComponent implements OnInit {
+  public fontList: any;
   public frame: any = {};
+  public textFormat: any = {};
 
   constructor(private chiliEvent: ChiliEventService, private changeDetect: ChangeDetectorRef, private editorService: EditorService) {
+  }
+
+  ngOnInit() {
+    this.chiliEvent.updateEditorText$.subscribe(styles => {
+      for (let key in styles) {
+        if (styles.hasOwnProperty(key)) {
+          if (!isNaN(styles[key])) {
+            styles[key] = +styles[key];
+          }
+
+          if (styles[key] === 'true' || styles[key] === 'false') {
+            styles[key] = (styles[key] === 'true');
+          }
+        }
+      }
+
+      this.textFormat = styles;
+
+      this.changeDetect.detectChanges();
+    });
+
     this.chiliEvent.updateEditorFrame$.subscribe(frame => {
       this.frame = frame;
       this.changeDetect.detectChanges();
     });
-  }
 
-  ngOnInit() {
+    this.chiliEvent.updateFontList$.subscribe(fonts => {
+      this.fontList = fonts;
+      this.textFormat.font = this.fontList[0];
+      this.changeDetect.detectChanges();
+    });
   }
 
   setFrame(event) {
     this.editorService.setFrameProperty(event);
+  }
+
+  setFontStyle(event) {
+    this.editorService.setTextFormat(event);
   }
 }

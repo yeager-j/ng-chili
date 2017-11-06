@@ -17,6 +17,7 @@ import { AppRouter } from './app.router';
 import { AuthGuard } from './auth.guard';
 import { AuthService } from './common/services/auth.service';
 import { EventHandler } from './common/classes/event-handler';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { EventHandler } from './common/classes/event-handler';
     BrowserModule,
     FormsModule,
     RouterModule,
-    AppRouter
+    AppRouter,
+    NgbModule.forRoot()
   ],
   providers: [NgSoapService, WindowRefService, ChiliEventService, EditorService, Globals, AuthGuard, AuthService, EventHandler],
   bootstrap: [AppComponent]
