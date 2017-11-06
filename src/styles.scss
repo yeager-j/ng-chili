@@ -1,0 +1,23 @@
+.app {
+  height: 100vh;
+
+  .row {
+    &.auth {
+      height: 80%;
+    }
+
+    &.editor {
+      height: 100%;
+    }
+
+    .col-md-3, .col-lg-2 {
+      padding-right: 0;
+    }
+
+    .col-md-9, .col-lg-10 {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}
+/* You can add global styles to this file, and also import other style files */
