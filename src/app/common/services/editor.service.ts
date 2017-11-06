@@ -9,18 +9,16 @@ import { WindowRefService } from './window-ref.service';
 export class EditorService {
   public editor: any;
 
-  constructor(private windowRef: WindowRefService) { }
+  constructor(private windowRef: WindowRefService, private eventHandler: EventHandler) { }
 
   onFrameLoad(frameWindow) {
     frameWindow.GetEditor(jsInterface => {
       this.editor = frameWindow.editorObject;
 
-      let eventHandler = new EventHandler(this.editor, this);
-
-      console.log(this.editor);
+      this.eventHandler.editor = this.editor;
 
       this.windowRef.nativeWindow.OnEditorEvent = (type, targetID) => {
-        eventHandler.handleEvent(type, targetID);
+        this.eventHandler.handleEvent(type, targetID);
       };
     });
   }
@@ -39,8 +37,8 @@ export class EditorService {
     this.editor.SetProperty(path, propName, propValue);
   }
 
-  setTextFormat(style) {
-    this.setSelection('document.selectedText.textFormat', style);
+  setTextFormat(property) {
+    this.setSelection('document.selectedText.textFormat', property);
   }
 
   setFrameProperty(property) {

@@ -1,7 +1,10 @@
-import { EditorService } from '../services/editor.service';
+import { ChiliEventService } from '../services/chili-event.service';
+import { Injectable } from '@angular/core';
 
+@Injectable()
 export class EventHandler {
-  private editor: any;
+  private _editor: any;
+
   private eventMap = {
     'DocumentFullyLoaded': EventHandler.DocumentFullyLoaded,
     'TextSelectionChanged': EventHandler.TextSelectionChanged,
@@ -10,14 +13,7 @@ export class EventHandler {
     'FrameRotated': EventHandler.FrameModified
   };
 
-  constructor(private _editor: any, private editorService: EditorService) {
-    this.editor = _editor;
-
-    for (let key in this.eventMap) {
-      if (this.eventMap.hasOwnProperty(key)) {
-        this.editor.AddListener(key);
-      }
-    }
+  constructor(private chiliEvent: ChiliEventService) {
   }
 
   private static DocumentFullyLoaded(instance: any) {
@@ -29,7 +25,7 @@ export class EventHandler {
       fontList.push(font);
     }
 
-    instance.editorService.updateFontList(fontList);
+    instance.chiliEvent.updateFontList(fontList);
   }
 
   private static TextSelectionChanged(instance: any) {
@@ -43,7 +39,7 @@ export class EventHandler {
 
     if (!selectedText) { return; }
 
-    instance.editorService.updateEditorText(selectedText);
+    instance.chiliEvent.updateEditorText(selectedText);
   }
 
   private static FrameModified(instance: any) {
@@ -51,10 +47,28 @@ export class EventHandler {
 
     if (!selectedFrame) { return; }
 
-    instance.editorService.updateEditorFrame(selectedFrame);
+    instance.chiliEvent.updateEditorFrame(selectedFrame);
   }
 
   handleEvent(type: string, targetID: any) {
+    if (!this.editor) {
+      throw new Error('You must set the editor object!');
+    }
+
     this.eventMap[type](this);
+  }
+
+  get editor() {
+    return this._editor;
+  }
+
+  set editor(editor) {
+    this._editor = editor;
+
+    for (let key in this.eventMap) {
+      if (this.eventMap.hasOwnProperty(key)) {
+        this.editor.AddListener(key);
+      }
+    }
   }
 }
