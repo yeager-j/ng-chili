@@ -53,4 +53,13 @@ export class EditorControlsComponent implements OnInit {
   setFontStyle(event) {
     this.editorService.setTextFormat(event);
   }
+
+  deleteFrame() {
+    if (this.frame) {
+      this.editorService.executeFunction({
+        frame: this.frame,
+        func: 'Delete'
+      });
+    }
+  }
 }

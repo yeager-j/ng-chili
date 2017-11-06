@@ -33,6 +33,8 @@
         <input id="rotation" type="text" [(ngModel)]="frame.rotation" (ngModelChange)="setFrame({property: 'rotation', value: $event})" class="form-control col-sm-8" name="rotation">
       </div>
 
+      <button class="btn btn-danger btn-block" (click)="deleteFrame()">Delete Frame</button>
+
       <hr>
     </form>
 
