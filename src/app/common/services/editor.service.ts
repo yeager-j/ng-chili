@@ -7,7 +7,7 @@ import { WindowRefService } from './window-ref.service';
 
 @Injectable()
 export class EditorService {
-  public editor: any;
+  private _editor: any;
 
   constructor(private windowRef: WindowRefService, private eventHandler: EventHandler) { }
 
@@ -51,5 +51,17 @@ export class EditorService {
     } else {
       this.editor.ExecuteFunction(`document.allFrames[${frame.id}]`, func);
     }
+  }
+
+  get editor() {
+    if (!this._editor) {
+      throw new Error('The editor object hasn\'t been instantiated yet!');
+    }
+
+    return this._editor;
+  }
+
+  set editor(editor) {
+    this._editor = editor;
   }
 }
