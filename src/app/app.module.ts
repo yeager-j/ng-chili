@@ -16,6 +16,7 @@ import { RouterModule } from '@angular/router';
 import { AppRouter } from './app.router';
 import { AuthGuard } from './auth.guard';
 import { AuthService } from './common/services/auth.service';
+import { EventHandler } from './common/classes/event-handler';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,7 @@ import { AuthService } from './common/services/auth.service';
     RouterModule,
     AppRouter
   ],
-  providers: [NgSoapService, WindowRefService, ChiliEventService, EditorService, Globals, AuthGuard, AuthService],
+  providers: [NgSoapService, WindowRefService, ChiliEventService, EditorService, Globals, AuthGuard, AuthService, EventHandler],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

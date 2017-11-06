@@ -8,5 +8,32 @@
     <button class="btn btn-primary btn-block" (click)="executeFunction()">New Textbox</button>
 
     <hr>
+
+    <form *ngIf="frame?.x">
+      <h4>Generic Frame</h4>
+
+      <div class="form-group row">
+        <label for="x" class="col-sm-4 col-form-label">X:</label>
+        <input id="x" type="text" [(ngModel)]="frame.x" (ngModelChange)="setFrame({property: 'x', value: $event})" class="form-control col-sm-8" name="x">
+      </div>
+      <div class="form-group row">
+        <label for="y" class="col-sm-4 col-form-label">Y:</label>
+        <input id="y" type="text" [(ngModel)]="frame.y" (ngModelChange)="setFrame({property: 'y', value: $event})" class="form-control col-sm-8" name="y">
+      </div>
+      <div class="form-group row">
+        <label for="width" class="col-sm-4 col-form-label">Width:</label>
+        <input id="width" type="text" [(ngModel)]="frame.width" (ngModelChange)="setFrame({property: 'width', value: $event})" class="form-control col-sm-8" name="width">
+      </div>
+      <div class="form-group row">
+        <label for="height" class="col-sm-4 col-form-label">Height:</label>
+        <input id="height" type="text" [(ngModel)]="frame.height" (ngModelChange)="setFrame({property: 'height', value: $event})" class="form-control col-sm-8" name="height">
+      </div>
+      <div class="form-group row">
+        <label for="rotation" class="col-sm-4 col-form-label">Rotation:</label>
+        <input id="rotation" type="text" [(ngModel)]="frame.rotation" (ngModelChange)="setFrame({property: 'rotation', value: $event})" class="form-control col-sm-8" name="rotation">
+      </div>
+
+      <hr>
+    </form>
   </div>
 </div>
