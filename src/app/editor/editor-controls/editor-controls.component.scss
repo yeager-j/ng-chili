@@ -1,0 +1,27 @@
+.card {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+
+  .button-row {
+    .btn {
+      margin: 5px;
+    }
+
+  }
+
+  .imageList {
+    .col-md-6 {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
