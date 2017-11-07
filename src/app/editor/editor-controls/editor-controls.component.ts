@@ -8,6 +8,7 @@ import { EditorService } from '../../common/services/editor.service';
   styleUrls: ['./editor-controls.component.scss']
 })
 export class EditorControlsComponent implements OnInit {
+  public editorLoaded = false;
   public fontList: any;
   public frame: any = {};
   public textFormat: any = {};
@@ -40,6 +41,8 @@ export class EditorControlsComponent implements OnInit {
     });
 
     this.chiliEvent.updateFontList$.subscribe(fonts => {
+      this.editorLoaded = true;
+
       this.fontList = fonts;
       this.textFormat.font = this.fontList[0];
       this.changeDetect.detectChanges();
@@ -56,10 +59,12 @@ export class EditorControlsComponent implements OnInit {
 
   deleteFrame() {
     if (this.frame) {
-      this.editorService.executeFunction({
-        frame: this.frame,
-        func: 'Delete'
-      });
+      console.log(this.frame);
+      this.editorService.deleteFrame(this.frame);
     }
+  }
+
+  addFrame() {
+    this.editorService.insertFrame();
   }
 }
