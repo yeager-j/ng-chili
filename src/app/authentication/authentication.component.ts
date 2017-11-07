@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class AuthenticationComponent implements OnInit {
   userName: string;
   password: string;
-  itemID = 'ee80b16f-c78c-4996-b1a2-789455b30f71';
+  itemID: string;
   error;
 
   constructor(private authService: AuthService, private router: Router) { }
