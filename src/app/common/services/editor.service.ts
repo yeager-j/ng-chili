@@ -4,12 +4,13 @@ import { NgSoapService } from './ng-soap.service';
 import { Globals } from '../globals';
 import { EventHandler } from '../classes/event-handler';
 import { WindowRefService } from './window-ref.service';
+import { ChiliEventService } from './chili-event.service';
 
 @Injectable()
 export class EditorService {
   private _editor: any;
 
-  constructor(private windowRef: WindowRefService, private eventHandler: EventHandler) { }
+  constructor(private windowRef: WindowRefService, private eventHandler: EventHandler, private chiliEvent: ChiliEventService) { }
 
   onFrameLoad(frameWindow) {
     frameWindow.GetEditor(jsInterface => {
@@ -45,12 +46,13 @@ export class EditorService {
     this.setSelection('document.selectedFrame', property);
   }
 
-  executeFunction({frame, func, args = null}) {
-    if (args) {
-      this.editor.ExecuteFunction(`document.allFrames[${frame.id}]`, func, args);
-    } else {
-      this.editor.ExecuteFunction(`document.allFrames[${frame.id}]`, func);
-    }
+  deleteFrame(frame) {
+    this.editor.ExecuteFunction(`document.allFrames[${frame.id}]`, 'Delete');
+    this.chiliEvent.updateEditorFrame(null);
+  }
+
+  insertFrame() {
+    this.editor.ExecuteFunction(`document.pages[1].frames`, 'Add', 'text', 10, 10, 100, 40)
   }
 
   get editor() {

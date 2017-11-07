@@ -1,5 +1,6 @@
 import { ChiliEventService } from '../services/chili-event.service';
 import { Injectable } from '@angular/core';
+import { Utils } from './utils';
 
 @Injectable()
 export class EventHandler {
@@ -10,7 +11,8 @@ export class EventHandler {
     'TextSelectionChanged': EventHandler.TextSelectionChanged,
     'SelectedFrameChanged': EventHandler.FrameModified,
     'FrameMoved': EventHandler.FrameModified,
-    'FrameRotated': EventHandler.FrameModified
+    'FrameRotated': EventHandler.FrameModified,
+    'SelectionContentChanged': EventHandler.FrameModified
   };
 
   constructor(private chiliEvent: ChiliEventService) {
@@ -29,15 +31,19 @@ export class EventHandler {
   }
 
   private static TextSelectionChanged(instance: any) {
-    let frame = instance.editor.GetObject('document.selectedFrame');
+    let textFrame = instance.editor.GetObject('document.selectedText');
 
-    if (frame) {
+    if (!textFrame) {
       return;
     }
 
-    let selectedText = instance.editor.GetObject('document.selectedText.textFormat');
+    let id = Utils.getIDFromObject(textFrame.frame);
 
-    if (!selectedText) { return; }
+    let frame = instance.editor.GetObject(`document.allFrames[${id}`);
+
+    instance.chiliEvent.updateEditorFrame(frame);
+
+    let selectedText = instance.editor.GetObject('document.selectedText.textFormat');
 
     instance.chiliEvent.updateEditorText(selectedText);
   }
@@ -46,7 +52,7 @@ export class EventHandler {
     let selectedFrame = instance.editor.GetObject('document.selectedFrame');
 
     if (!selectedFrame) { return; }
-
+    
     instance.chiliEvent.updateEditorFrame(selectedFrame);
   }
 
